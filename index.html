@@ -22,8 +22,7 @@
                             card: '#0a0d26',
                             purple: '#7c3aed',
                             cyan: '#06b6d4',
-                            xbox: '#107c10',
-                            glow: '#3b82f6'
+                            xbox: '#107c10'
                         }
                     }
                 }
@@ -40,7 +39,7 @@
             background-attachment: fixed;
         }
         .glass-panel {
-            background: rgba(10, 13, 38, 0.7);
+            background: rgba(10, 13, 38, 0.8);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -54,27 +53,430 @@
             box-shadow: 0 0 25px rgba(124, 58, 237, 0.4);
             border-color: rgba(168, 85, 247, 0.6);
         }
-        .glow-cyan:hover {
-            box-shadow: 0 0 25px rgba(6, 182, 212, 0.4);
-            border-color: rgba(34, 211, 238, 0.6);
-        }
         .glow-xbox:hover {
             box-shadow: 0 0 25px rgba(16, 124, 16, 0.5);
             border-color: rgba(31, 172, 16, 0.8);
         }
         .duration-card-bg {
-            background-size: cover;
-            background-position: center;
             position: relative;
+            overflow: hidden;
         }
         .duration-card-bg::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(3, 4, 12, 0.92) 20%, rgba(10, 13, 38, 0.75) 100%);
-            backdrop-filter: blur(2px);
-            border-radius: inherit;
+            background: linear-gradient(to top, rgba(3, 4, 12, 0.95) 15%, rgba(10, 13, 38, 0.7) 100%);
+            z-index: 1;
         }
-        /* خلفية صورة شعار الجيم باس الزجاجية المعدلة */
-        .ultimate-bg {
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600"><defs><radialGradient id="g" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="%237c3aed" stop-opacity="0.3"/><stop offset="100%" stop-color="%2303040c" stop-opacity="0.9"/></radialGradient></defs><rect width="600" height="600" fill="url(%23g)"/><circle cx="300" cy="250" r="180" fill="none" stroke="%2306b6d4" stroke-width="4" opacity="0.4"/><path d="M210 180 C 250 140, 350 140, 390 180 C 340 250, 260 250, 210 180 Z" fill="%23107c10" opacity="0.6"/><text x="300" y="440" font-family="sans-serif" font-weight="900" font-size="42" fill="%2314b8a6" text-anchor="middle
+        .ultimate-bg-img {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><defs><radialGradient id="rg" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="%237c3aed" stop-opacity="0.4"/><stop offset="100%" stop-color="%2303040c" stop-opacity="0.95"/></radialGradient></defs><rect width="400" height="400" fill="url(%23rg)"/><circle cx="200" cy="160" r="110" fill="none" stroke="%2306b6d4" stroke-width="3" opacity="0.4"/><path d="M140 120 C 170 90, 230 90, 260 120 C 220 170, 180 170, 140 120 Z" fill="%23107c10" opacity="0.7"/><text x="200" y="300" font-family="sans-serif" font-weight="900" font-size="28" fill="%2314b8a6" text-anchor="middle">GAME PASS</text><text x="200" y="330" font-family="sans-serif" font-weight="bold" font-size="16" fill="%23ffffff" letter-spacing="3" text-anchor="middle">ULTIMATE</text></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="text-gray-100 font-tajawal antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- شريط التنقل العلوي -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="bg-gradient-to-tr from-cosmic-purple to-cosmic-cyan p-3 rounded-2xl text-white text-2xl font-black shadow-lg shadow-cosmic-purple/30">
+                    <i class="fa-solid fa-gamepad"></i>
+                </div>
+                <span class="text-2xl font-black tracking-wider bg-gradient-to-r from-cyan-400 via-purple-400 to-emerald-400 bg-clip-text text-transparent">XBOX-H2-STORE</span>
+            </div>
+            
+            <nav class="hidden md:flex items-center space-x-8 space-x-reverse text-lg font-medium text-gray-300">
+                <a href="#subscriptions" class="hover:text-purple-400 transition">الاشتراكات</a>
+                <a href="#games" class="hover:text-cyan-400 transition">الألعاب</a>
+                <a href="#payment" class="hover:text-emerald-400 transition">وسائل الدفع</a>
+            </nav>
+
+            <div class="flex items-center gap-4">
+                <button onclick="toggleCart()" class="relative bg-white/5 hover:bg-white/10 border border-white/10 text-white px-5 py-2.5 rounded-xl font-bold transition flex items-center gap-2">
+                    <i class="fa-solid fa-cart-shopping text-cyan-400"></i>
+                    <span>السلة</span>
+                    <span id="cartCount" class="bg-gradient-to-r from-purple-600 to-pink-600 text-white text-xs px-2 py-0.5 rounded-full font-black">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- القسم الرئيسي -->
+    <section class="relative py-20 px-4 text-center overflow-hidden">
+        <div class="max-w-4xl mx-auto space-y-6 relative z-10">
+            <span class="inline-block bg-purple-900/40 text-purple-300 text-sm font-bold px-5 py-2 rounded-full border border-purple-500/30 backdrop-blur-md">
+                🚀 الوجهة الأولى للاعبي الأكس بوكس في مصر
+            </span>
+            <h1 class="text-4xl sm:text-6xl font-black tracking-tight leading-tight bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
+                عالم الألعاب والاشتراكات الرقمية بين يديك
+            </h1>
+            <p class="text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto">
+                احصل على أحدث ألعاب الأكس بوكس واشتراكات Game Pass الرسمية بأفضل الأسعار مع تصفح حر وإتمام فوري عبر الواتساب.
+            </p>
+            <div class="pt-4 flex flex-wrap justify-center gap-4">
+                <a href="#subscriptions" class="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-xl shadow-purple-900/40 transition transform hover:-translate-y-1">
+                    تصفح الاشتراكات
+                </a>
+                <a href="https://wa.me/201221188837" target="_blank" class="bg-emerald-600/20 border border-emerald-500/40 hover:bg-emerald-600/30 text-emerald-400 px-8 py-4 rounded-xl font-bold text-lg transition flex items-center gap-3">
+                    <i class="fa-brands fa-whatsapp text-2xl"></i> تواصل عبر الواتساب
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الاشتراكات -->
+    <section id="subscriptions" class="py-16 px-4 max-w-7xl mx-auto space-y-16">
+        
+        <!-- Xbox Game Pass Ultimate -->
+        <div class="space-y-8">
+            <div class="text-center">
+                <span class="text-xs font-bold tracking-widest text-purple-400 uppercase">ULTIMATE PASS</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-white mt-1">🌌 اشتراكات Xbox Game Pass Ultimate</h2>
+                <p class="text-gray-400 text-sm mt-2">اختر مدة الاشتراك المناسبة لك</p>
+            </div>
+
+            <div id="ultimateGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- يتم تعبئتها تلقائياً من إعدادات المنتجات بالأسفل -->
+            </div>
+        </div>
+
+        <!-- Xbox Game Pass Core -->
+        <div class="space-y-8 pt-8 border-t border-white/10">
+            <div class="text-center">
+                <span class="text-xs font-bold tracking-widest text-emerald-400 uppercase">CORE PASS</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-white mt-1">🎮 اشتراكات Xbox Game Pass Core</h2>
+                <p class="text-gray-400 text-sm mt-2">الاشتراك الأساسي للعب الجماعي أونلاين</p>
+            </div>
+
+            <div id="coreGrid" class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <!-- يتم تعبئتها تلقائياً من إعدادات المنتجات بالأسفل -->
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الألعاب -->
+    <section id="games" class="py-16 px-4 max-w-7xl mx-auto space-y-8">
+        <div class="text-center">
+            <span class="text-xs font-bold tracking-widest text-cyan-400 uppercase">POPULAR GAMES</span>
+            <h2 class="text-3xl sm:text-4xl font-black text-white mt-1">🔥 عروض أحدث ألعاب الأكس بوكس</h2>
+        </div>
+
+        <div id="gamesGrid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- يتم تعبئتها تلقائياً من إعدادات المنتجات بالأسفل -->
+        </div>
+    </section>
+
+    <!-- وسائل الدفع -->
+    <section id="payment" class="py-16 px-4 max-w-7xl mx-auto text-center space-y-8">
+        <div>
+            <span class="text-xs font-bold tracking-widest text-emerald-400 uppercase">PAYMENT METHODS</span>
+            <h2 class="text-3xl sm:text-4xl font-black text-white mt-1">💳 وسائل الدفع المتاحة في مصر</h2>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div class="glass-panel p-6 rounded-2xl flex flex-col items-center justify-center space-y-3 border border-white/10 hover:border-emerald-500/40 transition">
+                <div class="w-16 h-16 bg-red-600/20 text-red-400 rounded-full flex items-center justify-center text-2xl font-black">
+                    <i class="fa-solid fa-mobile-screen-button"></i>
+                </div>
+                <span class="font-bold text-lg">المحافظ الإلكترونية</span>
+                <span class="text-xs text-gray-400">فودافون كاش - أورنج كاش - اتصالات كاش</span>
+            </div>
+
+            <div class="glass-panel p-6 rounded-2xl flex flex-col items-center justify-center space-y-3 border border-white/10 hover:border-purple-500/40 transition">
+                <div class="w-16 h-16 bg-purple-600/20 text-purple-400 rounded-full flex items-center justify-center text-2xl font-black">
+                    Insta
+                </div>
+                <span class="font-bold text-lg">إنستا باي (InstaPay)</span>
+                <span class="text-xs text-gray-400">تحويل فوري مباشر بأعلى أمان</span>
+            </div>
+
+            <div class="glass-panel p-6 rounded-2xl flex flex-col items-center justify-center space-y-3 border border-white/10 hover:border-blue-500/40 transition">
+                <div class="w-16 h-16 bg-blue-600/20 text-blue-400 rounded-full flex items-center justify-center text-2xl">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
+                <span class="font-bold text-lg">تحويل بنكي</span>
+                <span class="text-xs text-gray-400">إيداع أو تحويل مباشر عبر الحساب البنكي</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- سلة التسوق الجانبية (Cart Drawer) -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden justify-end">
+        <div class="w-full max-w-md bg-[#0a0d26] h-full p-6 flex flex-col justify-between border-r border-white/10">
+            <div class="space-y-6 overflow-y-auto">
+                <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                    <h3 class="text-2xl font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-cart-shopping text-cyan-400"></i> سلة التسوق
+                    </h3>
+                    <button onclick="toggleCart()" class="text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+
+                <div id="cartItems" class="space-y-4">
+                    <!-- المشتريات تضاف هنا تلقائياً -->
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 pt-4 space-y-4">
+                <div class="flex justify-between items-center text-xl font-black">
+                    <span>الإجمالي:</span>
+                    <span id="cartTotal" class="text-cyan-400">0 ج.م</span>
+                </div>
+                <button onclick="openCheckoutModal()" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white py-3.5 rounded-xl font-bold text-lg transition shadow-lg shadow-emerald-900/40 flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-2xl"></i> إتمام الطلب عبر الواتساب
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة إدخال بيانات الطلب (Checkout Modal) -->
+    <div id="checkoutModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-md rounded-2xl p-6 space-y-6 relative border border-white/10">
+            <button onclick="closeCheckoutModal()" class="absolute top-4 left-4 text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <div class="text-center space-y-2">
+                <h3 class="text-2xl font-bold text-white">إدخال بيانات الطلب</h3>
+                <p class="text-gray-400 text-sm">سيتم تحويلك للواتساب لإتمام عملية الشراء فوراً</p>
+            </div>
+            <form onsubmit="submitOrder(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm text-gray-300 mb-2">الاسم بالكامل</label>
+                    <input type="text" id="custName" required class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-400" placeholder="أدخل اسمك الكريم">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-300 mb-2">رقم الهاتف / الواتساب</label>
+                    <input type="tel" id="custPhone" required class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-400" placeholder="01xxxxxxxxx">
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white py-3.5 rounded-xl font-bold text-lg transition flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-2xl"></i> تأكيد وإرسال للواتساب
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- الفوتر -->
+    <footer class="border-t border-white/10 py-8 px-4 text-center text-gray-500 text-sm space-y-2 glass-panel">
+        <p class="font-bold text-gray-300">XBOX-H2-STORE © 2026 - جميع الحقوق محفوظة</p>
+        <p>للدعم الفني المباشر عبر الواتساب: <span class="text-cyan-400 font-bold">0201221188837</span></p>
+    </footer>
+
+    <!-- ==========================================
+         منطقة التحكم السهلة بالأسعار والمخزون
+         ========================================== -->
+    <script>
+        // 1. اشتراكات Game Pass Ultimate
+        const ultimateProducts = [
+            { title: "Xbox Game Pass Ultimate - شهرين", price: 700, badge: "شهرين", icon: "fa-gamepad", inStock: true },
+            { title: "Xbox Game Pass Ultimate - 4 شهور", price: 1300, badge: "4 شهور", icon: "fa-gamepad", inStock: true },
+            { title: "Xbox Game Pass Ultimate - 6 شهور", price: 1900, badge: "6 شهور", icon: "fa-gamepad", inStock: true },
+            { title: "Xbox Game Pass Ultimate - 8 شهور", price: 2850, badge: "8 شهور", icon: "fa-gamepad", inStock: true },
+            { title: "Xbox Game Pass Ultimate - 12 شهر", price: 3850, badge: "12 شهر", icon: "fa-crown", inStock: true },
+            { title: "Xbox Game Pass Ultimate - 14 شهر", price: 4300, badge: "الأفضل قيمة", icon: "fa-gem", inStock: true, special: true }
+        ];
+
+        // 2. اشتراكات Game Pass Core
+        const coreProducts = [
+            { title: "Xbox Game Pass Core - 14 يوم", price: 125, badge: "14 يوم", icon: "fa-stopwatch", inStock: true },
+            { title: "Xbox Game Pass Core - 6 شهور", price: 1000, badge: "6 شهور", icon: "fa-shield", inStock: true },
+            { title: "Xbox Game Pass Core - 12 شهر", price: 1950, badge: "12 شهر", icon: "fa-award", inStock: true }
+        ];
+
+        // 3. ألعاب الأكس بوكس
+        const gamesProducts = [
+            { title: "EA Sports FC 26", price: 1050, desc: "اللعبة المنتظرة لعشاق كرة القدم على كونسول Xbox.", icon: "fa-futbol", color: "text-cyan-400", inStock: true },
+            { title: "Call of Duty: Black Ops 6", price: 1350, desc: "أقوى تجربة حروب وأكشن بجودة الرسوميات الفائقة.", icon: "fa-crosshairs", color: "text-purple-400", inStock: true },
+            { title: "Forza Horizon 5", price: 790, desc: "عالم سباقات السيارات المفتوح والتحديات الرائعة.", icon: "fa-car-side", color: "text-emerald-400", inStock: true }
+        ];
+
+        // ==========================================
+        // تشغيل وعرض المنتجات تلقائياً بالموقع
+        // ==========================================
+        document.addEventListener("DOMContentLoaded", () => {
+            renderStore();
+        });
+
+        function renderStore() {
+            // عرض Ultimate
+            const ultimateContainer = document.getElementById('ultimateGrid');
+            ultimateContainer.innerHTML = ultimateProducts.map(p => `
+                <div class="glass-panel duration-card-bg ultimate-bg-img rounded-2xl p-6 transition duration-300 glow-purple flex flex-col justify-between h-72 border ${p.special ? 'border-pink-500/40 relative overflow-hidden' : 'border-purple-500/20'}">
+                    ${p.special ? '<div class="absolute -top-3 -right-12 bg-gradient-to-r from-pink-600 to-purple-600 text-white text-[10px] font-black py-1 px-10 rotate-45 shadow-md z-20">الأفضل قيمة</div>' : ''}
+                    <div class="relative z-10 flex justify-between items-start">
+                        <span class="bg-purple-600/90 text-white text-xs font-bold px-3 py-1 rounded-full border border-purple-400/30">${p.badge}</span>
+                        <i class="fa-solid ${p.icon} text-purple-400 text-2xl"></i>
+                    </div>
+                    <div class="relative z-10 text-center my-auto space-y-1">
+                        <div class="text-xl font-black text-white">Xbox Game Pass Ultimate</div>
+                        <div class="text-xl font-black text-cyan-400">${p.price} ج.م</div>
+                    </div>
+                    ${p.inStock ? `
+                        <button onclick="addToCart('${p.title}', ${p.price})" class="relative z-10 w-full ${p.special ? 'bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500' : 'bg-purple-600 hover:bg-purple-500'} text-white py-3 rounded-xl font-bold transition flex items-center justify-center gap-2 shadow-lg">
+                            <i class="fa-solid fa-cart-plus"></i> إضافة للسلة
+                        </button>
+                    ` : `
+                        <button disabled class="relative z-10 w-full bg-gray-800 text-gray-500 py-3 rounded-xl font-bold cursor-not-allowed">
+                            نفدت الكمية
+                        </button>
+                    `}
+                </div>
+            `).join('');
+
+            // عرض Core
+            const coreContainer = document.getElementById('coreGrid');
+            coreContainer.innerHTML = coreProducts.map(p => `
+                <div class="glass-panel duration-card-bg ultimate-bg-img rounded-2xl p-6 transition duration-300 glow-xbox flex flex-col justify-between h-64 border border-emerald-500/20">
+                    <div class="relative z-10 flex justify-between items-start">
+                        <span class="bg-emerald-600/90 text-white text-xs font-bold px-3 py-1 rounded-full">${p.badge}</span>
+                        <i class="fa-solid ${p.icon} text-emerald-400 text-2xl"></i>
+                    </div>
+                    <div class="relative z-10 text-center my-auto space-y-1">
+                        <div class="text-lg font-black text-white">Xbox Game Pass Core</div>
+                        <div class="text-lg font-black text-emerald-400">${p.price} ج.م</div>
+                    </div>
+                    ${p.inStock ? `
+                        <button onclick="addToCart('${p.title}', ${p.price})" class="relative z-10 w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2.5 rounded-xl font-bold transition flex items-center justify-center gap-2 shadow-lg">
+                            <i class="fa-solid fa-cart-plus"></i> إضافة للسلة
+                        </button>
+                    ` : `
+                        <button disabled class="relative z-10 w-full bg-gray-800 text-gray-500 py-2.5 rounded-xl font-bold cursor-not-allowed">
+                            نفدت الكمية
+                        </button>
+                    `}
+                </div>
+            `).join('');
+
+            // عرض الألعاب
+            const gamesContainer = document.getElementById('gamesGrid');
+            gamesContainer.innerHTML = gamesProducts.map(g => `
+                <div class="glass-panel rounded-2xl overflow-hidden border border-white/10 hover:border-cyan-500/50 transition duration-300 flex flex-col justify-between">
+                    <div class="h-48 bg-gradient-to-tr from-purple-900/50 to-cyan-900/50 relative flex items-center justify-center">
+                        <i class="fa-solid ${g.icon} text-6xl ${g.color} opacity-80"></i>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <h3 class="text-xl font-bold">${g.title}</h3>
+                        <p class="text-gray-400 text-sm">${g.desc}</p>
+                        <div class="flex items-center justify-between pt-2">
+                            <span class="text-xl font-black text-cyan-400">${g.price} ج.م</span>
+                            ${g.inStock ? `
+                                <button onclick="addToCart('${g.title}', ${g.price})" class="bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 rounded-xl font-bold text-sm transition">إضافة للسلة</button>
+                            ` : `
+                                <button disabled class="bg-gray-800 text-gray-500 px-4 py-2 rounded-xl font-bold text-sm cursor-not-allowed">غير متوفر</button>
+                            `}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ==========================================
+        // وظائف سلة التسوق والشراء عبر الواتساب
+        // ==========================================
+        let cart = [];
+
+        function addToCart(title, price) {
+            const existing = cart.find(item => item.title === title);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ title, price, qty: 1 });
+            }
+            updateCartUI();
+            toggleCart(true);
+        }
+
+        function updateCartUI() {
+            const itemsContainer = document.getElementById('cartItems');
+            const cartCount = document.getElementById('cartCount');
+            const cartTotal = document.getElementById('cartTotal');
+
+            itemsContainer.innerHTML = '';
+            let total = 0;
+            let count = 0;
+
+            if (cart.length === 0) {
+                itemsContainer.innerHTML = '<p class="text-gray-400 text-center py-8">السلة فارغة حالياً</p>';
+            } else {
+                cart.forEach((item, index) => {
+                    total += item.price * item.qty;
+                    count += item.qty;
+                    itemsContainer.innerHTML += `
+                        <div class="glass-card p-4 rounded-xl flex items-center justify-between border border-white/5">
+                            <div>
+                                <h4 class="font-bold text-white text-sm">${item.title}</h4>
+                                <div class="text-cyan-400 text-xs font-bold mt-1">${item.price} ج.م</div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button type="button" onclick="changeQty(${index}, -1)" class="w-7 h-7 bg-white/10 rounded-lg text-white font-bold flex items-center justify-center">-</button>
+                                <span class="font-bold text-sm w-4 text-center">${item.qty}</span>
+                                <button type="button" onclick="changeQty(${index}, 1)" class="w-7 h-7 bg-white/10 rounded-lg text-white font-bold flex items-center justify-center">+</button>
+                                <button type="button" onclick="removeItem(${index})" class="text-red-400 hover:text-red-300 mr-2"><i class="fa-solid fa-trash text-sm"></i></button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            cartCount.innerText = count;
+            cartTotal.innerText = `${total} ج.م`;
+        }
+
+        function changeQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function toggleCart(forceOpen = false) {
+            const drawer = document.getElementById('cartDrawer');
+            if (forceOpen || drawer.classList.contains('hidden')) {
+                drawer.classList.remove('hidden');
+                drawer.classList.add('flex');
+            } else {
+                drawer.classList.add('hidden');
+                drawer.classList.remove('flex');
+            }
+        }
+
+        function openCheckoutModal() {
+            if (cart.length === 0) {
+                alert('سلة التسوق فارغة! الرجاء اختيار اشتراك أو لعبة أولاً.');
+                return;
+            }
+            toggleCart();
+            document.getElementById('checkoutModal').classList.remove('hidden');
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').classList.add('hidden');
+        }
+
+        function submitOrder(event) {
+            event.preventDefault();
+            const name = document.getElementById('custName').value;
+            const phone = document.getElementById('custPhone').value;
+            
+            let itemsList = '';
+            let total = 0;
+            cart.forEach(item => {
+                const subtotal = item.price * item.qty;
+                total += subtotal;
+                itemsList += `• ${item.title} (العدد: ${item.qty}) - ${subtotal} ج.م\n`;
+            });
+
+            const message = `مرحباً، أرغب في إتمام طلب جديد من XBOX-H2-STORE:\n\n👤 الاسم: ${name}\n📱 الهاتف: ${phone}\n\n📋 تفاصيل الطلب:\n${itemsList}\n💰 الإجمالي الكلي: ${total} ج.م`;
+
+            const whatsappUrl = `https://wa.me/201221188837?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+
+            closeCheckoutModal();
+        }
+    </script>
+</body>
+</html>
