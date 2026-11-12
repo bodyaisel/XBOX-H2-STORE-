@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XBOX-H2-STORE | المتجر الرقمي العالمي للاشتراكات والألعاب</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { tajawal: ['Tajawal', 'sans-serif'] },
+                    colors: { xbox: { green: '#107c10', glow: '#06b6d4', purple: '#8b5cf6' } }
+                }
+            }
+        }
+    </script>
+    <style>
+        body.dark {
+            background-color: #001208;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(16, 124, 16, 0.65) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(4, 120, 87, 0.5) 0%, transparent 50%),
+                radial-gradient(circle at 50% 40%, rgba(6, 182, 212, 0.4) 0%, transparent 60%),
+                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.3) 0%, transparent 45%),
+                linear-gradient(135deg, #000c05 0%, #012111 50%, #000c05 100%);
+            color: #f3f4f6;
+        }
+        body.light {
+            background-color: #f0fdf4;
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(16, 124, 16, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(6, 182, 212, 0.15) 0%, transparent 40%),
+                linear-gradient(135deg, #f7fee7 0%, #ecfdf5 50%, #f0fdf4 100%);
+            color: #1f2937;
+        }
+        body.dark .glass-panel {
+            background: rgba(2, 26, 14, 0.85);
+            border: 1px solid rgba(16, 124, 16, 0.6);
+            box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.95), inset 0 1px 2px 0 rgba(255, 255, 255, 0.25), 0 0 35px rgba(16, 124, 16, 0.4);
+        }
+        body.light .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(16, 124, 16, 0.2);
+            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.1), 0 0 15px rgba(16, 124, 16, 0.1);
+        }
+        .glass-panel { backdrop-filter: blur(35px); -webkit-backdrop-filter: blur(35px); }
+        .neon-glow { text-shadow: 0 0 12px rgba(16, 124, 16, 0.9), 0 0 25px rgba(6, 182, 212, 0.8); }
+        .neon-border-glow {
+            box-shadow: 0 0 20px rgba(16, 124, 16, 0.4), inset 0 0 15px rgba(6, 182, 212, 0.2);
+            transition: all 0.4s ease;
+        }
+        .neon-border-glow:hover {
+            box-shadow: 0 0 30px rgba(16, 124, 16, 0.8), 0 0 20px rgba(6, 182, 212, 0.6);
+            border-color: rgba(6, 182, 212, 0.8);
+        }
+        @keyframes pulse-anim { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(16, 124, 16, 0.8)); } 50% { transform: scale(1.1); filter: drop-shadow(0 0 22px rgba(6, 182, 212, 1)); } }
+        @keyframes float-anim { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-8px) rotate(1deg); } }
+        .animated-icon { animation: pulse-anim 2s infinite ease-in-out; }
+        .floating { animation: float-anim 3s infinite ease-in-out; }
+    </style>
+</head>
+<body class="dark font-tajawal antialiased min-h-screen flex flex-col justify-between transition-colors duration-300">
+
+    <!-- زر الواتساب العائم -->
+    <a href="https://wa.me/201221188837?text=مرحباً%20أريد%20الاستفسار%20عن%20منتجات%20متجر%20XBOX-H2" target="_blank" class="fixed bottom-20 right-5 z-50 bg-emerald-600 hover:bg-emerald-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-[0_0_20px_rgba(16,124,16,0.8)] transition transform hover:scale-110 floating">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- شريط العروض -->
+    <div class="bg-gradient-to-r from-emerald-950 via-teal-900 to-purple-950 text-white text-xs py-2 px-4 text-center font-bold border-b border-white/10 flex items-center justify-center gap-2">
+        <i class="fa-solid fa-bolt text-yellow-400 animated-icon"></i>
+        <span>عروض الفضاء الأخضر - استخدم كود الخصم <strong class="text-yellow-300">H2STORE</strong> لتوفير 10% فورية!</span>
+    </div>
+
+    <!-- رأس الصفحة -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
+            <button onclick="switchTab('home')" class="text-emerald-400 p-2 text-xl flex-shrink-0"><i class="fa-solid fa-gamepad animated-icon"></i></button>
+            <div class="flex items-center space-x-2 space-x-reverse cursor-pointer flex-shrink-0" onclick="switchTab('home')">
+                <div class="w-10 h-10 flex items-center justify-center bg-gradient-to-tr from-xbox-green via-cyan-500 to-purple-600 rounded-2xl shadow-xl border border-white/30 floating">
+                    <i class="fa-solid fa-headset text-white text-base"></i>
+                </div>
+                <span class="hidden sm:inline text-xl font-black bg-gradient-to-r from-emerald-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent neon-glow">XBOX-H2 STORE</span>
+            </div>
+            <div class="flex-1 max-w-md relative">
+                <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"><i class="fa-solid fa-magnifying-glass"></i></span>
+                <input type="text" id="searchInput" oninput="handleSearch()" placeholder="ابحث عن لعبة، اشتراك، أو بطاقة..." class="w-full bg-black/50 border border-emerald-500/40 rounded-2xl pr-10 pl-4 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-cyan-400 transition shadow-inner">
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="toggleTheme()" class="text-cyan-400 p-2 text-lg rounded-xl glass-panel hover:scale-105 transition"><i id="themeIcon" class="fa-solid fa-sun"></i></button>
+                <button onclick="toggleCart()" class="relative text-cyan-400 p-2 text-xl">
+                    <i class="fa-solid fa-cart-shopping animated-icon"></i>
+                    <span id="cartCount" class="absolute -top-1 -right-1 bg-gradient-to-r from-emerald-500 to-cyan-500 text-black text-[10px] w-5 h-5 rounded-full font-black flex items-center justify-center shadow-lg">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="flex-1 max-w-7xl mx-auto px-4 py-6 w-full space-y-6">
+        <!-- البانر الرئيسي -->
+        <div class="glass-panel p-6 rounded-3xl border border-emerald-500/50 bg-gradient-to-r from-emerald-950/90 via-teal-950/70 to-purple-950/80 flex flex-col md:flex-row items-center gap-6 shadow-2xl relative overflow-hidden">
+            <div class="w-28 h-28 rounded-2xl overflow-hidden border-2 border-cyan-400 shadow-[0_0_30px_rgba(6,182,212,0.6)] flex-shrink-0 floating bg-black/60 flex items-center justify-center p-1">
+                <img id="mainStoreBannerImg" src="" alt="XBOX-H2-STORE" class="w-full h-full object-contain rounded-xl">
+            </div>
+            <div class="text-center md:text-right relative z-10 space-y-2">
+                <div class="inline-block bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider">✨ المنصة الفضائية الأولى للألعاب الرقمية</div>
+                <h1 class="text-xl sm:text-2xl font-black text-white">XBOX-H2-STORE | عالمك المتكامل للترفيه والكسر الرقمي</h1>
+                <p class="text-xs text-gray-300 leading-relaxed">اشتراكات أكس بوكس الرسمية بجميع فئاتها ومددها، وألعاب الأكس بوكس، وبلايستيشن، وستيم، و IPTV.</p>
+            </div>
+        </div>
+
+        <!-- أزرار التصفح -->
+        <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+            <button onclick="filterCategory('all')" class="category-btn px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-emerald-600 text-white shadow-md transition">🔥 كل المنتجات</button>
+            <button onclick="filterCategory('xbox-subs')" class="category-btn px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-[#021f10] text-gray-300 border border-emerald-500/40 hover:border-emerald-500 transition">💚 اشتراكات Xbox</button>
+            <button onclick="filterCategory('xbox-games')" class="category-btn px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-[#021f10] text-gray-300 border border-emerald-500/40 hover:border-emerald-500 transition">🎮 ألعاب Xbox</button>
+            <button onclick="filterCategory('giftcards')" class="category-btn px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-[#021f10] text-gray-300 border border-emerald-500/40 hover:border-emerald-500 transition">🎁 كروت هدايا Xbox</button>
+            <button onclick="filterCategory('playstation')" class="category-btn px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-[#021f10] text-gray-300 border border-blue-500/40 hover:border-blue-500 transition">🎮 قسم بلايستيشن</button>
+            <button onclick="filterCategory('steam')" class="category-btn px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-[#021f10] text-gray-300 border border-sky-500/40 hover:border-sky-500 transition">💻 قسم ستيم PC</button>
+            <button onclick="filterCategory('iptv')" class="category-btn px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-[#021f10] text-gray-300 border border-cyan-500/40 hover:border-cyan-500 transition">📺 اشتراكات IPTV</button>
+        </div>
+
+        <div id="dynamicSectionInfo"></div>
+        <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    </main>
+
+    <!-- شريط التنقل السفلي المحدث (مع زر التتبع) -->
+    <nav class="fixed bottom-0 left-0 right-0 z-50 glass-panel border-t border-white/10 h-16 flex items-center justify-around px-2 bg-[#001208]/95 backdrop-blur-lg">
+        <button onclick="switchTab('home')" class="flex flex-col items-center text-emerald-400 transition text-xs font-bold"><i class="fa-solid fa-compass text-lg mb-1 animated-icon"></i><span>استكشاف</span></button>
+        <button onclick="switchTab('search')" class="flex flex-col items-center text-gray-400 hover:text-emerald-400 transition text-xs font-bold"><i class="fa-solid fa-magnifying-glass text-lg mb-1"></i><span>بحث</span></button>
+        <button onclick="openTrackingModal()" class="flex flex-col items-center text-gray-400 hover:text-cyan-400 transition text-xs font-bold"><i class="fa-solid fa-truck-fast text-lg mb-1"></i><span>تتبع طلبي</span></button>
+        <button onclick="toggleCart()" class="flex flex-col items-center text-gray-400 hover:text-emerald-400 transition text-xs font-bold relative"><i class="fa-solid fa-cart-shopping text-lg mb-1"></i><span>السلة</span></button>
+    </nav>
+
+    <!-- نافذة تتبع الطلبات الفورية -->
+    <div id="trackingModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-md rounded-2xl p-6 space-y-4 relative border border-cyan-500/50">
+            <button onclick="closeTrackingModal()" class="absolute top-4 left-4 text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-xl font-bold text-white text-center flex items-center justify-center gap-2"><i class="fa-solid fa-truck-fast text-cyan-400"></i> تتبع حالة الطلب الفوري</h3>
+            <p class="text-xs text-gray-300 text-center">أدخل رقم هاتفك المسجل بالطلب لمعرفة حالته الحالية:</p>
+            <div class="space-y-3">
+                <input type="tel" id="trackPhoneInput" placeholder="أدخل رقم الهاتف (مثال: 0122...)" class="w-full bg-black/60 border border-white/20 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-400">
+                <button onclick="checkOrderStatus()" class="w-full bg-gradient-to-r from-cyan-600 to-emerald-600 text-white py-2.5 rounded-xl font-bold text-xs shadow-lg">استعلام عن الحالة</button>
+            </div>
+            <div id="trackResult" class="hidden bg-black/50 p-4 rounded-xl border border-emerald-500/30 space-y-2 text-center">
+                <p class="text-xs font-bold text-emerald-400">🟢 الحالة: تم تأكيد الدفع وجاري التسليم الفوري عبر الواتساب</p>
+                <span class="text-[10px] text-gray-400">إذا تأخر الاستلام لأكثر من 5 دقائق، تواصل معنا مباشرة.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- سلة التسوق -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden justify-end">
+        <div class="w-full max-w-md glass-panel h-full p-6 flex flex-col justify-between border-r border-emerald-500/40">
+            <div class="space-y-6 overflow-y-auto">
+                <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                    <h3 class="text-xl font-bold flex items-center gap-2"><i class="fa-solid fa-cart-shopping text-emerald-400"></i> سلة التسوق</h3>
+                    <button onclick="toggleCart()" class="text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div id="cartItems" class="space-y-4"></div>
+            </div>
+            <div class="border-t border-white/10 pt-4 space-y-3">
+                <div class="flex justify-between items-center text-sm text-gray-300"><span>المجموع:</span><span id="subTotal">0 ج.م</span></div>
+                <div class="flex justify-between items-center text-lg font-black"><span>الإجمالي:</span><span id="cartTotal" class="text-emerald-400">0 ج.م</span></div>
+                <button onclick="openCheckoutModal()" class="w-full bg-xbox-green text-white py-2.5 rounded-xl font-bold text-xs shadow-xl">إتمام الطلب عبر الواتساب</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة إتمام الطلب -->
+    <div id="checkoutModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-md rounded-2xl p-6 space-y-5 relative border border-emerald-500/50">
+            <button onclick="closeCheckoutModal()" class="absolute top-4 left-4 text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-xl font-bold text-white text-center">تأكيد بيانات الطلب</h3>
+            <form onsubmit="submitOrder(event)" class="space-y-4">
+                <div><label class="block text-xs text-gray-300 mb-1">الاسم</label><input type="text" id="custName" required class="w-full bg-black/60 border border-white/20 rounded-xl px-4 py-2 text-sm text-white focus:outline-none"></div>
+                <div><label class="block text-xs text-gray-300 mb-1">رقم الواتساب</label><input type="tel" id="custPhone" required class="w-full bg-black/60 border border-white/20 rounded-xl px-4 py-2 text-sm text-white focus:outline-none"></div>
+                <button type="submit" class="w-full bg-xbox-green text-white py-3 rounded-xl font-bold text-sm shadow-xl">إرسال الطلب للواتساب</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ربط ملف التكوين الخارجي (store-config.js) -->
+    <script src="store-config.js"></script>
+
+    <!-- سكربت التشغيل الشامل والمحدث -->
+    <script>
+        let cart = [];
+        let currentCategory = 'all';
+
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('mainStoreBannerImg').src = assetImages.mainBanner;
+            renderProducts('all', '');
+        });
+
+        function renderProducts(filter = 'all', searchQuery = '') {
+            const grid = document.getElementById('productsGrid');
+            let result = allProducts;
+            if (filter !== 'all') { result = result.filter(p => p.category === filter); }
+            if (searchQuery.trim() !== '') {
+                const q = searchQuery.toLowerCase().trim();
+                result = result.filter(p => p.name.toLowerCase().includes(q) || p.tag.toLowerCase().includes(q));
+            }
+            if (result.length === 0) {
+                grid.innerHTML = `<div class="col-span-full py-16 text-center space-y-3 glass-panel rounded-3xl"><h4 class="text-base font-bold text-white">عذراً، لم نجد نتائج مطابقة!</h4></div>`;
+                return;
+            }
+            
+            // تم دمج زر مشاركة المنتج + شارات الضمان والشحن الفوري داخل كل بطاقة منتج
+            grid.innerHTML = result.map(item => `
+                <div class="glass-panel p-4 rounded-3xl border border-emerald-500/30 flex flex-col justify-between space-y-3 neon-border-glow group">
+                    <div class="bg-gradient-to-b from-[#021f10] to-[#000a04] p-3 rounded-2xl text-center space-y-2 border border-emerald-500/20 relative overflow-hidden">
+                        <span class="text-[9px] font-bold bg-yellow-500/20 text-yellow-300 border border-yellow-500/40 px-2 py-0.5 rounded-full absolute top-2 right-2 z-10 shadow-md">${item.badge}</span>
+                        <div class="overflow-hidden rounded-xl h-44 border border-cyan-500/30 bg-black/80 flex items-center justify-center p-2 shadow-[inset_0_0_20px_rgba(0,0,0,0.9)]">
+                            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-contain transform group-hover:scale-105 transition duration-500">
+                        </div>
+                        <h4 class="text-xs font-black text-white mt-1 tracking-wide">${item.tag}</h4>
+                        <p class="text-[10px] text-gray-300 leading-relaxed">${item.desc}</p>
+                        
+                        <!-- شارة الضمان الذهبي والشحن الفوري -->
+                        <div class="flex justify-between items-center bg-black/40 px-3 py-1.5 rounded-xl border border-white/10 text-[9px] text-gray-300">
+                            <span class="text-emerald-400 font-bold"><i class="fa-solid fa-bolt text-yellow-400"></i> تسليم فوري</span>
+                            <span class="text-cyan-300 font-bold"><i class="fa-solid fa-shield-halved"></i> ضمان كامل</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-white mb-1">${item.name}</h3>
+                        <div class="flex justify-between items-center">
+                            <div class="text-lg font-black text-cyan-400">${item.price} <span class="text-xs font-normal text-gray-300">ج.م</span></div>
+                            <button onclick="shareProduct('${item.name}', ${item.price})" class="text-gray-400 hover:text-cyan-400 text-xs p-1.5 rounded-lg bg-black/40 border border-white/10 transition" title="مشاركة المنتج"><i class="fa-solid fa-share-nodes"></i></button>
+                        </div>
+                    </div>
+                    <button onclick="addToCart('${item.id}', '${item.name}', ${item.price})" class="w-full bg-gradient-to-r from-xbox-green to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white py-2.5 rounded-xl font-bold text-xs shadow-[0_0_15px_rgba(16,124,16,0.5)] transition transform hover:scale-[1.02]">إضافة للسلة</button>
+                </div>
+            `).join('');
+        }
+
+        function filterCategory(cat) {
+            currentCategory = cat;
+            document.getElementById('searchInput').value = '';
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('bg-emerald-600', 'text-white');
+                btn.classList.add('bg-[#021f10]', 'text-gray-300');
+            });
+            event.target.classList.remove('bg-[#021f10]', 'text-gray-300');
+            event.target.classList.add('bg-emerald-600', 'text-white');
+            renderProducts(cat, '');
+        }
+
+        function handleSearch() { renderProducts(currentCategory, document.getElementById('searchInput').value); }
+        function toggleTheme() { document.body.classList.toggle('dark'); document.body.classList.toggle('light'); }
+        
+        // نظام مشاركة المنتج
+        function shareProduct(name, price) {
+            const text = `🎮 أرشح لك هذا المنتج المميز من متجر XBOX-H2-STORE:\n*${name}* بسعر *${price} ج.م*\nللطلب والاستفسار تواصل معنا عبر المتجر!`;
+            if (navigator.share) {
+                navigator.share({ title: 'XBOX-H2-STORE', text: text }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(text);
+                alert('تم نسخ تفاصيل المنتج والحافظة بنجاح! يمكنك مشاركتها مع أصدقائك.');
+            }
+        }
+
+        // نافذة تتبع الطلبات
+        function openTrackingModal() { document.getElementById('trackingModal').classList.remove('hidden'); }
+        function closeTrackingModal() { 
+            document.getElementById('trackingModal').classList.add('hidden'); 
+            document.getElementById('trackResult').classList.add('hidden');
+            document.getElementById('trackPhoneInput').value = '';
+        }
+        function checkOrderStatus() {
+            const phone = document.getElementById('trackPhoneInput').value.trim();
+            if(phone.length < 8) { alert('الرجاء إدخال رقم هاتف صحيح.'); return; }
+            document.getElementById('trackResult').classList.remove('hidden');
+        }
+
+        function addToCart(id, name, price) {
+            let item = cart.find(i => i.id === id);
+            if (item) item.qty++; else cart.push({ id, name, price, qty: 1 });
+            document.getElementById('cartCount').innerText = cart.reduce((s, i) => s + i.qty, 0);
+            alert('تمت الإضافة للسلة بنجاح!');
+        }
+        function toggleCart() { const d = document.getElementById('cartDrawer'); d.classList.toggle('hidden'); d.classList.toggle('flex'); renderCart(); }
+        function renderCart() {
+            const c = document.getElementById('cartItems');
+            if (cart.length === 0) { c.innerHTML = `<p class="text-gray-400 text-center py-12 text-sm">السلة فارغة..</p>`; document.getElementById('subTotal').innerText = '0 ج.م'; document.getElementById('cartTotal').innerText = '0 ج.م'; return; }
+            let sub = 0;
+            c.innerHTML = cart.map(i => {
+                sub += i.price * i.qty;
+                return `<div class="glass-panel p-3 rounded-2xl flex items-center justify-between gap-3"><div class="flex-1"><h5 class="font-bold text-white text-xs">${i.name}</h5><span class="text-cyan-400 text-xs">${i.price * i.qty} ج.م (عدد: ${i.qty})</span></div></div>`;
+            }).join('');
+            document.getElementById('subTotal').innerText = sub + ' ج.م';
+            document.getElementById('cartTotal').innerText = sub + ' ج.م';
+        }
+        function openCheckoutModal() { if (cart.length === 0) { alert('السلة فارغة!'); return; } toggleCart(); document.getElementById('checkoutModal').classList.remove('hidden'); }
+        function closeCheckoutModal() { document.getElementById('checkoutModal').classList.add('hidden'); }
+        function submitOrder(e) {
+            e.preventDefault();
+            let name = document.getElementById('custName').value;
+            let phone = document.getElementById('custPhone').value;
+            let sub = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+            let txt = `🛒 *طلب جديد من المتجر*\n👤 الاسم: ${name}\n📞 الهاتف: ${phone}\n\n📦 المنتجات:\n`;
+            cart.forEach(i => { txt += `- ${i.name} (عدد: ${i.qty}) - ${i.price * i.qty} ج.م\n`; });
+            txt += `\n💰 الإجمالي: ${sub} ج.م`;
+            window.open(`https://wa.me/201221188837?text=${encodeURIComponent(txt)}`, '_blank');
+            cart = []; document.getElementById('cartCount').innerText = 0; closeCheckoutModal();
+        }
+        function switchTab(tab) { if (tab === 'home') { window.scrollTo({ top: 0, behavior: 'smooth' }); filterCategory('all'); } else { document.getElementById('searchInput').focus(); } }
+    </script>
+</body>
+</html>
