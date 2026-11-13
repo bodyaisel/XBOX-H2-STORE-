@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XBOX-H2-STORE | المتجر الرقمي الاحترافي للاشتراكات والألعاب</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { tajawal: ['Tajawal', 'sans-serif'] },
+                    colors: { xbox: { green: '#107c10', glow: '#06b6d4', purple: '#8b5cf6' } }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #020704;
+            background-image: 
+                radial-gradient(circle at 10% 15%, rgba(16, 185, 129, 0.32) 0%, transparent 40%),
+                radial-gradient(circle at 90% 20%, rgba(6, 182, 212, 0.28) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(16, 124, 16, 0.2) 0%, transparent 60%),
+                radial-gradient(circle at 85% 85%, rgba(139, 92, 246, 0.25) 0%, transparent 45%),
+                linear-gradient(135deg, #010403 0%, #05160c 50%, #010402 100%);
+            background-attachment: fixed;
+            color: #f3f4f6;
+            font-family: 'Tajawal', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(8, 20, 13, 0.92);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            box-shadow: 0 16px 40px -6px rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+        }
+        .product-card {
+            background: linear-gradient(180deg, rgba(12, 27, 18, 0.95) 0%, rgba(3, 10, 6, 0.99) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .product-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(6, 182, 212, 0.8);
+            box-shadow: 0 15px 30px -6px rgba(16, 185, 129, 0.4), 0 0 20px rgba(6, 182, 212, 0.3);
+        }
+        .sidebar-link {
+            transition: all 0.25s ease;
+        }
+        .sidebar-link:hover, .sidebar-link.active {
+            background: linear-gradient(270deg, rgba(16, 185, 129, 0.3) 0%, rgba(6, 182, 212, 0.12) 100%);
+            border-right: 4px solid #10b981;
+            color: #6ee7b7;
+        }
+        .neon-text {
+            text-shadow: 0 0 15px rgba(16, 185, 129, 0.7), 0 0 30px rgba(6, 182, 212, 0.5);
+        }
+        .pulse-badge {
+            animation: pulseGlow 2s infinite;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(16,185,129,0.5); }
+            50% { box-shadow: 0 0 30px rgba(6,182,212,0.8); }
+        }
+        @keyframes slideDownBanner {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .animated-banner {
+            animation: slideDownBanner 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            animation: marquee 25s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+        .scrollbar-none::-webkit-scrollbar { display: none; }
+        .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="dark min-h-screen flex flex-col">
+
+    <!-- زر الواتساب العائم (متجاوب ومريح للموبايل) -->
+    <a href="https://wa.me/201221188837?text=مرحباً%20أريد%20الاستفسار%20عن%20منتجات%20متجر%20XBOX-H2" target="_blank" class="fixed bottom-5 left-5 z-50 bg-gradient-to-tr from-emerald-600 via-teal-500 to-cyan-400 text-white w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center text-xl sm:text-2xl shadow-[0_0_25px_rgba(16,185,129,0.8)] transition transform hover:scale-110 pulse-badge">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- شريط العروض التنازلي المتحرك العلوي -->
+    <div class="bg-gradient-to-r from-emerald-900 via-teal-900 to-cyan-900 border-b border-emerald-500/30 text-emerald-200 text-[10px] sm:text-xs py-2 px-3 text-center font-bold flex items-center justify-center gap-2 sm:gap-3">
+        <i class="fa-solid fa-fire text-yellow-400 animate-bounce"></i>
+        <span>عرض لفترة محدودة: استخدم كود الخصم <span class="bg-yellow-500 text-black px-1.5 py-0.5 rounded font-black">H2STORE</span> لخصم فوري!</span>
+        <span id="countdownTimer" class="bg-black/50 px-2 py-0.5 rounded text-cyan-300 font-mono text-[10px] sm:text-xs">00:00:00</span>
+    </div>
+
+    <!-- الشريط العلوي (Header) -->
+    <header class="glass-panel border-b border-emerald-500/20 sticky top-0 z-40 px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-2 sm:gap-3">
+        <div class="flex items-center gap-2 sm:gap-3 cursor-pointer" onclick="filterCategory('all')">
+            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden border border-emerald-400/40 shadow-[0_0_15px_rgba(16,185,129,0.6)] flex items-center justify-center bg-black/60 flex-shrink-0">
+                <img id="headerLogoImg" src="" alt="Logo" class="w-full h-full object-cover">
+            </div>
+            <div class="flex items-center gap-1.5">
+                <span id="headerStoreName" class="text-sm sm:text-lg font-black bg-gradient-to-r from-emerald-300 via-cyan-200 to-emerald-400 bg-clip-text text-transparent neon-text tracking-wider">XBOX-H2</span>
+                <span class="hidden sm:inline bg-emerald-500/20 text-emerald-300 text-[10px] px-2 py-0.5 rounded-md font-bold border border-emerald-500/40">STORE</span>
+            </div>
+        </div>
+
+        <!-- شريط البحث المتجاوب -->
+        <div class="flex-1 max-w-md relative mx-1 sm:mx-2">
+            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-400/70 text-xs"><i class="fa-solid fa-magnifying-glass"></i></span>
+            <input type="text" id="searchInput" oninput="handleSearch()" placeholder="ابحث عن ألعاب، اشتراكات، بطاقات..." class="w-full bg-black/60 border border-emerald-500/30 rounded-xl pr-9 pl-3 py-1.5 sm:py-2 text-[11px] sm:text-xs text-white placeholder-gray-400 focus:outline-none focus:border-cyan-400 transition">
+        </div>
+
+        <!-- إجراءات علوية (تتبع الطلب + السلة) -->
+        <div class="flex items-center gap-1.5 sm:gap-3 text-xs font-bold">
+            <button onclick="openTrackingModal()" class="flex items-center gap-1 bg-black/40 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl border border-white/10 hover:border-cyan-400 transition text-[11px] sm:text-xs">
+                <i class="fa-solid fa-truck-fast text-cyan-400"></i><span class="hidden md:inline">تتبع الطلب</span>
+            </button>
+            <button onclick="toggleCart()" class="flex items-center gap-1.5 bg-gradient-to-r from-emerald-600/30 to-cyan-600/20 text-emerald-200 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl border border-emerald-400/40 relative text-[11px] sm:text-xs">
+                <i class="fa-solid fa-cart-shopping text-cyan-300"></i><span class="hidden sm:inline">السلة</span>
+                <span id="cartCount" class="bg-gradient-to-r from-emerald-400 to-cyan-400 text-black text-[9px] sm:text-[10px] px-1.5 py-0.2 rounded-full font-black">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- الهيكل الرئيسي للمتجر -->
+    <div class="flex-1 flex flex-col lg:flex-row w-full">
+        
+        <!-- القائمة الجانبية للشاشات الكبيرة (لاب توب / كمبيوتر) -->
+        <aside class="hidden lg:flex w-64 xl:w-72 glass-panel border-l border-emerald-500/20 p-4 space-y-5 flex-col justify-between flex-shrink-0 sticky top-[61px] h-[calc(100vh-61px)] overflow-y-auto">
+            <div class="space-y-4">
+                <div class="bg-gradient-to-r from-emerald-950/90 to-teal-950/70 p-3 rounded-2xl border border-emerald-400/40 flex items-center gap-3 shadow-lg">
+                    <div class="w-10 h-10 rounded-xl overflow-hidden border border-emerald-400/40 flex items-center justify-center bg-black/60 shadow flex-shrink-0">
+                        <img id="sidebarLogoImg" src="" alt="Logo" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h4 class="text-xs sm:text-sm font-black text-white tracking-wide">XBOX-H2-STORE</h4>
+                        <span class="text-[9px] text-emerald-300 font-medium">بوابتك الرسمية لعالم الألعاب</span>
+                    </div>
+                </div>
+
+                <div class="space-y-1">
+                    <span class="text-[10px] font-bold text-emerald-400/80 px-2 block mb-1">أقسام المتجر</span>
+                    <button onclick="filterCategory('all', event)" class="sidebar-link active w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-gray-200 text-right">
+                        <i class="fa-solid fa-compass text-emerald-400 w-4"></i> كل المنتجات
+                    </button>
+                    <button onclick="filterCategory('xbox-subs', event)" class="sidebar-link w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-gray-300 text-right">
+                        <i class="fa-solid fa-bolt text-yellow-400 w-4"></i> اشتراكات جيم باس
+                    </button>
+                    <button onclick="filterCategory('xbox-games', event)" class="sidebar-link w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-gray-300 text-right">
+                        <i class="fa-solid fa-gamepad text-cyan-400 w-4"></i> ألعاب إكس بوكس
+                    </button>
+                    <button onclick="filterCategory('xbox-cards', event)" class="sidebar-link w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-gray-300 text-right">
+                        <i class="fa-solid fa-credit-card text-emerald-400 w-4"></i> كروت هدايا أكس بوكس
+                    </button>
+                    <button onclick="filterCategory('ps-cards', event)" class="sidebar-link w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-gray-300 text-right">
+                        <i class="fa-brands fa-playstation text-blue-400 w-4"></i> كروت هدايا بلايستيشن
+                    </button>
+                    <button onclick="filterCategory('playstation', event)" class="sidebar-link w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-gray-300 text-right">
+                        <i class="fa-solid fa-gamepad text-indigo-400 w-4"></i> ألعاب بلايستيشن
+                    </button>
+                    <button onclick="filterCategory('steam', event)" class="sidebar-link w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-gray-300 text-right">
+                        <i class="fa-brands fa-steam text-sky-400 w-4"></i> ألعاب وبطاقات ستيم
+                    </button>
+                    <button onclick="filterCategory('iptv', event)" class="sidebar-link w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-gray-300 text-right relative">
+                        <i class="fa-solid fa-tv text-pink-400 w-4"></i> اشتراكات IPTV
+                        <span class="bg-gradient-to-r from-emerald-500 to-cyan-500 text-black font-black text-[8px] px-1.5 py-0.2 rounded-full absolute left-2">VIP</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="pt-3 border-t border-white/10">
+                <div class="bg-gradient-to-b from-emerald-950/70 to-black/90 p-3 rounded-2xl border border-emerald-500/40 text-center space-y-2">
+                    <span class="text-[10px] font-bold text-emerald-300 block">تسليم فوري وضمان 100%</span>
+                    <a href="https://wa.me/201221188837" target="_blank" class="block w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-1.5 rounded-xl font-bold text-xs shadow transition">
+                        <i class="fa-brands fa-whatsapp ml-1"></i> تواصل معنا
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- المحتوى الرئيسي للمتجر (متجاوب تماماً للموبايل واللاب توب) -->
+        <main class="flex-1 p-2 sm:p-5 lg:p-6 space-y-4 sm:space-y-6 w-full max-w-7xl mx-auto overflow-hidden">
+            
+            <!-- 🌟 1. الشريط المتحرك للفئات والأقسام (قبل الرسالة الترحيبية - ممتاز للموبايل) -->
+            <div class="overflow-hidden w-full glass-panel py-2.5 rounded-2xl border border-emerald-500/30 relative">
+                <div class="absolute right-0 top-0 bottom-0 w-8 sm:w-12 bg-gradient-to-l from-[#08140d] to-transparent z-10 pointer-events-none"></div>
+                <div class="absolute left-0 top-0 bottom-0 w-8 sm:w-12 bg-gradient-to-r from-[#08140d] to-transparent z-10 pointer-events-none"></div>
+                <div class="animate-marquee flex gap-2.5 sm:gap-3 px-3 items-center">
+                    <!-- المجموعة الأولى -->
+                    <div class="flex gap-2.5">
+                        <button onclick="filterCategory('all', event)" class="px-3.5 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow flex items-center gap-1.5 whitespace-nowrap"><i class="fa-solid fa-compass"></i> كل المنتجات</button>
+                        <button onclick="filterCategory('xbox-subs', event)" class="px-3.5 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-black/60 text-gray-200 border border-emerald-500/30 hover:border-emerald-400 flex items-center gap-1.5 whitespace-nowrap"><i class="fa-solid fa-bolt text-yellow-400"></i> اشتراكات جيم باس</button>
+                        <button onclick="filterCategory('xbox-cards', event)" class="px-3.5 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-black/60 text-gray-200 border border-emerald-500/30 hover:border-emerald-400 flex items-center gap-1.5 whitespace-nowrap"><i class="fa-solid fa-credit-card text-emerald-400"></i> كروت أكس بوكس</button>
+                        <button onclick="filterCategory('ps-cards', event)" class="px-3.5 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-black/60 text-gray-200 border border-blue-500/30 hover:border-blue-400 flex items-center gap-1.5 whitespace-nowrap"><i class="fa-brands fa-playstation text-blue-400"></i> كروت بلايستيشن</button>
+                        <button onclick="filterCategory('xbox-games', event)" class="px-3.5 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-black/60 text-gray-200 border border-cyan-500/30 hover:border-cyan-400 flex items-center gap-1.5 whitespace-nowrap"><i class="fa-solid fa-gamepad text-cyan-400"></i> ألعاب إكس بوكس</button>
+                        <button onclick="filterCategory('playstation', event)" class="px-3.5 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-black/60 text-gray-200 border border-indigo-500/30 hover:border-indigo-400 flex items-center gap-1.5 whitespace-nowrap"><i class="fa-solid fa-gamepad text-indigo-400"></i> ألعاب بلايستيشن</button>
+                        <button onclick="filterCategory('steam', event)" class="px-3.5 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-black/60 text-gray-200 border border-sky-500/30 hover:border-sky-400 flex items-center gap-1.5 whitespace-nowrap"><i class="fa-brands fa-steam text-sky-400"></i> بطاقات ستيم</button>
+                        <button onclick="filterCategory('iptv', event)" class="px-3.5 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-black/60 text-gray-200 border border-purple-500/30 hover:border-purple-400 flex items-center gap-1.5 whitespace-nowrap"><i class="fa-solid fa-tv text-pink-400"></i> اشتراكات IPTV</button>
+                    </div>
+                    <!-- تكرار المجموعة للحركة الانسيابية -->
+                    <div class="flex gap-2.5">
+                        <button onclick="filterCategory('all', event)" class="px-3.5 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow flex items-center gap-1.5 whitespace-nowrap"><i class="fa-solid fa-compass"></i> كل المنتجات</button>
+                        <button onclick="filterCategory('xbox-subs', event)" class="px-3.5 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-black/60 text-gray-200 border border-emerald-500/30 hover:border-emerald-400 flex items-center gap-1.5 whitespace-nowrap"><i class="fa-solid fa-bolt text-yellow-400"></i> اشتراكات جيم باس</button>
+                        <button onclick="filterCategory('xbox-cards', event)" class="px-3.5 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-black/60 text-gray-200 border border-emerald-500/30 hover:border-emerald-400 flex items-center gap-1.5 whitespace-nowrap"><i class="fa-solid fa-credit-card text-emerald-400"></i> كروت أكس بوكس</button>
+                        <button onclick="filterCategory('ps-cards', event)" class="px-3.5 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-black/60 text-gray-200 border border-blue-500/30 hover:border-blue-400 flex items-center gap-1.5 whitespace-nowrap"><i class="fa-brands fa-playstation text-blue-400"></i> كروت بلايستيشن</button>
+                        <button onclick="filterCategory('xbox-games', event)" class="px-3.5 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-black/60 text-gray-200 border border-cyan-500/30 hover:border-cyan-400 flex items-center gap-1.5 whitespace-nowrap"><i class="fa-solid fa-gamepad text-cyan-400"></i> ألعاب إكس بوكس</button>
+                        <button onclick="filterCategory('playstation', event)" class="px-3.5 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-black/60 text-gray-200 border border-indigo-500/30 hover:border-indigo-400 flex items-center gap-1.5 whitespace-nowrap"><i class="fa-solid fa-gamepad text-indigo-400"></i> ألعاب بلايستيشن</button>
+                        <button onclick="filterCategory('steam', event)" class="px-3.5 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-black/60 text-gray-200 border border-sky-500/30 hover:border-sky-400 flex items-center gap-1.5 whitespace-nowrap"><i class="fa-brands fa-steam text-sky-400"></i> بطاقات ستيم</button>
+                        <button onclick="filterCategory('iptv', event)" class="px-3.5 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-black/60 text-gray-200 border border-purple-500/30 hover:border-purple-400 flex items-center gap-1.5 whitespace-nowrap"><i class="fa-solid fa-tv text-pink-400"></i> اشتراكات IPTV</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- البانر الترحيبي (متجاوب ومرن مع الشاشات) -->
+            <div id="welcomeBanner" class="glass-panel p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-emerald-400/40 bg-gradient-to-l from-emerald-950/95 via-teal-950/80 to-black/90 relative overflow-hidden shadow-2xl animated-banner">
+                <button onclick="document.getElementById('welcomeBanner').style.display='none'" class="absolute top-3 left-3 text-gray-400 hover:text-white text-sm p-1.5 bg-black/40 rounded-full z-20"><i class="fa-solid fa-xmark"></i></button>
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6 relative z-10">
+                    <div class="space-y-2 sm:space-y-3 text-center md:text-right flex-1">
+                        <span class="bg-emerald-500/20 text-emerald-300 text-[10px] sm:text-xs px-2.5 py-0.5 sm:py-1 rounded-full font-bold border border-emerald-500/40 inline-block">🎮 أقوى منصة رقمية في مصر</span>
+                        <h1 class="text-lg sm:text-2xl lg:text-3xl font-black text-white leading-snug">عالم الألعاب والاشتراكات الرقمية بين يديك مع <span class="text-emerald-400 neon-text">XBOX-H2-STORE</span></h1>
+                        <p class="text-[11px] sm:text-xs text-gray-300 max-w-xl leading-relaxed">
+                            استمتع بتسليم فوري، ضمان ذهبي شامل طوال فترة الاشتراك، ودعم فني على مدار الساعة. استخدم الكود <span class="bg-yellow-500/20 text-yellow-300 px-1.5 py-0.5 rounded font-bold border border-yellow-500/30">H2STORE</span> في السلة!
+                        </p>
+                    </div>
+                    <!-- صورة البانر -->
+                    <div class="w-full md:w-64 lg:w-72 h-32 sm:h-40 rounded-xl sm:rounded-2xl overflow-hidden border border-emerald-500/40 shadow-[0_0_20px_rgba(16,185,129,0.5)] flex-shrink-0 relative group">
+                        <img id="mainBannerImg" src="" alt="Main Banner" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 🔥 2. جزء متحرك لأقوى عروض المتجر (بعد الرسالة الترحيبية مباشرة) -->
+            <div class="glass-panel p-3.5 sm:p-4 rounded-2xl border border-yellow-500/40 bg-gradient-to-r from-yellow-950/30 via-emerald-950/50 to-black/80 space-y-2.5 overflow-hidden">
+                <div class="flex items-center justify-between px-1">
+                    <h3 class="text-xs sm:text-sm font-black text-yellow-400 flex items-center gap-2">
+                        <i class="fa-solid fa-fire-flame-curved text-orange-400 animate-pulse"></i> أقوى عروض وخصومات المتجر الحصرية:
+                    </h3>
+                    <span class="text-[9px] sm:text-[10px] bg-yellow-500/20 text-yellow-300 border border-yellow-500/40 px-2 py-0.5 rounded-full font-bold">خصومات محدودة</span>
+                </div>
+                <!-- شريط العروض الساخنة المتحرك -->
+                <div class="overflow-hidden w-full relative py-1">
+                    <div class="animate-marquee flex gap-3 items-center">
+                        <div class="flex gap-3">
+                            <div class="bg-black/70 border border-yellow-500/30 px-3.5 py-2 rounded-xl flex items-center gap-2.5 shadow whitespace-nowrap">
+                                <span class="text-[11px] sm:text-xs text-white font-bold">✨ جيم باس ألتيميت 12 شهر</span>
+                                <span class="text-[11px] sm:text-xs text-yellow-400 font-black">3850 ج.م</span>
+                                <button onclick="filterCategory('xbox-subs')" class="text-[10px] bg-emerald-600 text-white px-2 py-0.5 rounded-lg hover:bg-emerald-500">اطلب</button>
+                            </div>
+                            <div class="bg-black/70 border border-cyan-500/30 px-3.5 py-2 rounded-xl flex items-center gap-2.5 shadow whitespace-nowrap">
+                                <span class="text-[11px] sm:text-xs text-white font-bold">🎮 لعبة FC 27 Standard</span>
+                                <span class="text-[11px] sm:text-xs text-cyan-300 font-black">2300 ج.م</span>
+                                <button onclick="filterCategory('xbox-games')" class="text-[10px] bg-emerald-600 text-white px-2 py-0.5 rounded-lg hover:bg-emerald-500">اطلب</button>
+                            </div>
+                            <div class="bg-black/70 border border-purple-500/30 px-3.5 py-2 rounded-xl flex items-center gap-2.5 shadow whitespace-nowrap">
+                                <span class="text-[11px] sm:text-xs text-white font-bold">📺 اشتراك IPTV سنة (4K)</span>
+                                <span class="text-[11px] sm:text-xs text-purple-300 font-black">550 ج.م</span>
+                                <button onclick="filterCategory('iptv')" class="text-[10px] bg-emerald-600 text-white px-2 py-0.5 rounded-lg hover:bg-emerald-500">اطلب</button>
+                            </div>
+                        </div>
+                        <!-- تكرار للحركة الانسيابية -->
+                        <div class="flex gap-3">
+                            <div class="bg-black/70 border border-yellow-500/30 px-3.5 py-2 rounded-xl flex items-center gap-2.5 shadow whitespace-nowrap">
+                                <span class="text-[11px] sm:text-xs text-white font-bold">✨ جيم باس ألتيميت 12 شهر</span>
+                                <span class="text-[11px] sm:text-xs text-yellow-400 font-black">3850 ج.م</span>
+                                <button onclick="filterCategory('xbox-subs')" class="text-[10px] bg-emerald-600 text-white px-2 py-0.5 rounded-lg hover:bg-emerald-500">اطلب</button>
+                            </div>
+                            <div class="bg-black/70 border border-cyan-500/30 px-3.5 py-2 rounded-xl flex items-center gap-2.5 shadow whitespace-nowrap">
+                                <span class="text-[11px] sm:text-xs text-white font-bold">🎮 لعبة FC 27 Standard</span>
+                                <span class="text-[11px] sm:text-xs text-cyan-300 font-black">2300 ج.م</span>
+                                <button onclick="filterCategory('xbox-games')" class="text-[10px] bg-emerald-600 text-white px-2 py-0.5 rounded-lg hover:bg-emerald-500">اطلب</button>
+                            </div>
+                            <div class="bg-black/70 border border-purple-500/30 px-3.5 py-2 rounded-xl flex items-center gap-2.5 shadow whitespace-nowrap">
+                                <span class="text-[11px] sm:text-xs text-white font-bold">📺 اشتراك IPTV سنة (4K)</span>
+                                <span class="text-[11px] sm:text-xs text-purple-300 font-black">550 ج.م</span>
+                                <button onclick="filterCategory('iptv')" class="text-[10px] bg-emerald-600 text-white px-2 py-0.5 rounded-lg hover:bg-emerald-500">اطلب</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- صندوق التعريفات الديناميكي -->
+            <div id="categoryDefinitionBox"></div>
+
+            <!-- شبكة عرض المنتجات (عمودين على الموبايل، وعِدة أعمدة على اللاب توب) -->
+            <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-4 lg:gap-5"></div>
+
+            <!-- قسم آراء العملاء -->
+            <section id="reviewsSection" class="glass-panel p-4 sm:p-6 rounded-2xl border border-yellow-500/30 space-y-3 mt-6">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-white/10 pb-3">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-star text-yellow-400 text-base"></i>
+                        <h3 class="text-sm sm:text-base font-black text-white">آراء وتقييمات العملاء المميزين</h3>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="toggleReviews()" id="toggleReviewsBtn" class="bg-black/50 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-950 px-3 py-1.5 rounded-xl text-[11px] sm:text-xs font-bold transition">
+                            <i class="fa-solid fa-eye ml-1"></i> إظهار التقييمات
+                        </button>
+                        <button onclick="openReviewModal()" class="bg-gradient-to-r from-yellow-600 to-amber-600 hover:from-yellow-500 text-black px-3 py-1.5 rounded-xl text-[11px] sm:text-xs font-black transition shadow">
+                            <i class="fa-solid fa-plus ml-1"></i> أضف تقييمك
+                        </button>
+                    </div>
+                </div>
+                <div id="reviewsContainer" style="display: none;" class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs"></div>
+            </section>
+
+            <!-- الأسئلة الشائعة -->
+            <section id="faqSection" class="glass-panel p-4 sm:p-6 rounded-2xl border border-emerald-500/30 space-y-3">
+                <div class="flex items-center gap-2 border-b border-white/10 pb-3">
+                    <i class="fa-solid fa-circle-question text-emerald-400 text-base"></i>
+                    <h3 class="text-sm sm:text-base font-black text-white">الأسئلة الشائعة وتوضيح أنظمة التفعيل</h3>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                    <div class="bg-black/40 p-3 sm:p-4 rounded-xl border border-white/10 space-y-1">
+                        <h4 class="font-bold text-emerald-300 text-xs sm:text-sm">📌 ما الفرق بين الهوم والساين إن؟</h4>
+                        <p class="text-gray-300 text-[10px] sm:text-[11px] leading-relaxed">• <strong>الهوم:</strong> تلعب بحسابك الأساسي.<br>• <strong>الساين إن:</strong> تسجيل الدخول بالحساب في الخلفية.</p>
+                    </div>
+                    <div class="bg-black/40 p-3 sm:p-4 rounded-xl border border-white/10 space-y-1">
+                        <h4 class="font-bold text-cyan-300 text-xs sm:text-sm">👑 ما هو الحساب الكامل؟</h4>
+                        <p class="text-gray-300 text-[10px] sm:text-[11px] leading-relaxed">حساب خاص بك بالكامل (إيميل وباسورد تستطيع تغييرهما) تملكه 100%.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- وسائل الدفع -->
+            <section id="paymentSection" class="glass-panel p-4 sm:p-6 rounded-2xl border border-cyan-500/30 space-y-3">
+                <div class="flex items-center gap-2 border-b border-white/10 pb-3">
+                    <i class="fa-solid fa-wallet text-cyan-400 text-base"></i>
+                    <h3 class="text-sm sm:text-base font-black text-white">وسائل الدفع المعتمدة</h3>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-center text-xs">
+                    <div class="bg-black/50 p-3 rounded-xl border border-emerald-500/30 space-y-1">
+                        <i class="fa-solid fa-bolt text-lg text-purple-400"></i>
+                        <h4 class="font-black text-white text-[11px]">إنستاباي</h4>
+                    </div>
+                    <div class="bg-black/50 p-3 rounded-xl border border-red-500/30 space-y-1">
+                        <i class="fa-solid fa-mobile-screen-button text-lg text-red-500"></i>
+                        <h4 class="font-black text-white text-[11px]">فودافون كاش</h4>
+                    </div>
+                    <div class="bg-black/50 p-3 rounded-xl border border-orange-500/30 space-y-1">
+                        <i class="fa-solid fa-sim-card text-lg text-orange-400"></i>
+                        <h4 class="font-black text-white text-[11px]">أورنج / اتصالات</h4>
+                    </div>
+                    <div class="bg-black/50 p-3 rounded-xl border border-cyan-500/30 space-y-1">
+                        <i class="fa-solid fa-building-columns text-lg text-cyan-400"></i>
+                        <h4 class="font-black text-white text-[11px]">تحويل بنكي</h4>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- نافذة إضافة تقييم جديد -->
+    <div id="reviewModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-3">
+        <div class="glass-panel w-full max-w-md rounded-2xl p-5 space-y-3.5 relative border border-yellow-500/50">
+            <button onclick="closeReviewModal()" class="absolute top-3 left-3 text-gray-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-base font-bold text-white text-center">أضف تقييمك لمتجر XBOX-H2</h3>
+            <form onsubmit="submitReview(event)" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 mb-1">الاسم بالكامل:</label>
+                    <input type="text" id="reviewName" placeholder="أدخل اسمك..." required class="w-full bg-black/60 border border-white/20 rounded-xl px-3.5 py-2 text-xs text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 mb-1">التقييم (عدد النجوم):</label>
+                    <select id="reviewRating" class="w-full bg-black/80 border border-white/20 rounded-xl px-3.5 py-2 text-xs text-yellow-400 font-bold">
+                        <option value="5">⭐⭐⭐⭐⭐ (5/5 ممتاز جداً)</option>
+                        <option value="4">⭐⭐⭐⭐ (4/5 جيد جداً)</option>
+                        <option value="3">⭐⭐⭐ (3/5 متوسط)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 mb-1">رأيك وتجربتك بعد الشراء:</label>
+                    <textarea id="reviewComment" rows="3" placeholder="اكتب تجربتك مع التسليم والخدمة..." required class="w-full bg-black/60 border border-white/20 rounded-xl p-3 text-xs text-white"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-yellow-600 to-amber-600 hover:from-yellow-500 text-black font-black py-2.5 rounded-xl text-xs transition">نشر التقييم فوراً</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- نافذة تتبع الطلبات -->
+    <div id="trackingModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-3">
+        <div class="glass-panel w-full max-w-md rounded-2xl p-5 space-y-3.5 relative border border-cyan-500/50">
+            <button onclick="closeTrackingModal()" class="absolute top-3 left-3 text-gray-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-base font-bold text-white text-center">تتبع حالة الطلب الفوري</h3>
+            <input type="tel" id="trackPhoneInput" placeholder="أدخل رقم الهاتف..." class="w-full bg-black/60 border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white">
+            <button onclick="checkOrderStatus()" class="w-full bg-cyan-600 text-white py-2.5 rounded-xl font-bold text-xs">استعلام</button>
+            <div id="trackResult" class="hidden bg-black/50 p-3.5 rounded-xl border border-emerald-500/30 text-center text-xs text-emerald-400 font-bold">🟢 تم تأكيد الدفع وجاري التسليم الفوري</div>
+        </div>
+    </div>
+
+    <!-- نافذة السلة (מתجاوبة بالكامل لملء شاشة الموبايل) -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden justify-end">
+        <div class="w-full sm:max-w-md glass-panel h-full p-4 sm:p-6 flex flex-col justify-between border-r border-emerald-500/40">
+            <div class="space-y-4 overflow-y-auto">
+                <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                    <h3 class="text-base sm:text-lg font-bold flex items-center gap-2"><i class="fa-solid fa-cart-shopping text-emerald-400"></i> سلة المشتريات</h3>
+                    <button onclick="toggleCart()" class="text-gray-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div id="cartItems" class="space-y-2.5"></div>
+                <div class="bg-black/50 p-3 rounded-xl border border-yellow-500/30 space-y-2">
+                    <span class="text-xs font-bold text-yellow-300 block">هل لديك كود خصم؟</span>
+                    <div class="flex gap-2">
+                        <input type="text" id="promoInput" placeholder="أدخل الكود هنا..." class="flex-1 bg-black/70 border border-white/20 rounded-lg px-3 py-1.5 text-xs text-white uppercase">
+                        <button onclick="applyPromoCode()" class="bg-yellow-600 hover:bg-yellow-500 text-black font-bold px-3 py-1.5 rounded-lg text-xs">تطبيق</button>
+                    </div>
+                    <span id="promoMsg" class="text-[10px] block"></span>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-3 space-y-3">
+                <div class="flex justify-between items-center text-sm text-gray-300"><span>الإجمالي:</span><span id="cartTotal" class="text-emerald-400 font-bold text-base">0 ج.م</span></div>
+                <button onclick="openCheckoutModal()" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold text-xs shadow-lg">إتمام الطلب عبر الواتساب</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة إتمام الطلب -->
+    <div id="checkoutModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-3">
+        <div class="glass-panel w-full max-w-md rounded-2xl p-5 space-y-3.5 relative border border-emerald-500/50">
+            <button onclick="closeCheckoutModal()" class="absolute top-3 left-3 text-gray-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-base font-bold text-white text-center">تأكيد بيانات الطلب</h3>
+            <form onsubmit="submitOrder(event)" class="space-y-3">
+                <input type="text" id="custName" placeholder="الاسم بالكامل" required class="w-full bg-black/60 border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white">
+                <input type="tel" id="custPhone" placeholder="رقم الواتساب" required class="w-full bg-black/60 border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white">
+                <select id="paymentMethod" class="w-full bg-black/80 border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white">
+                    <option value="إنستاباي (InstaPay)">إنستاباي (InstaPay)</option>
+                    <option value="فودافون كاش">فودافون كاش</option>
+                    <option value="محفظة إلكترونية أخرى">محفظة إلكترونية أخرى</option>
+                    <option value="تحويل بنكي">تحويل بنكي</option>
+                </select>
+                <button type="submit" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold text-xs shadow-lg">إرسال الطلب للواتساب</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- استدعاء ملف البيانات الخارجي -->
+    <script src="products.js"></script>
+
+    <!-- السكربت التشغيلي للمتجر -->
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            if (typeof storeSettings !== 'undefined') {
+                if(document.getElementById('headerLogoImg')) document.getElementById('headerLogoImg').src = storeSettings.logoImage;
+                if(document.getElementById('sidebarLogoImg')) document.getElementById('sidebarLogoImg').src = storeSettings.logoImage;
+                if(document.getElementById('mainBannerImg')) document.getElementById('mainBannerImg').src = storeSettings.banners.mainBanner;
+            }
+            renderProducts('all', ''); 
+            renderReviews();
+        });
+
+        let timeRemaining = 5 * 3600 + 42 * 60;
+        setInterval(() => {
+            if(timeRemaining > 0) timeRemaining--;
+            let h = Math.floor(timeRemaining / 3600).toString().padStart(2, '0');
+            let m = Math.floor((timeRemaining % 3600) / 60).toString().padStart(2, '0');
+            let s = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById('countdownTimer').innerText = `${h}:${m}:${s}`;
+        }, 1000);
+
+        let defaultReviews = [
+            { name: "محمود إبراهيم", rating: 5, comment: "اشتركت في جيم باس 12 شهر، التسليم تم في اقل من 10 دقايق والخدمة ممتازة وضمان كامل!" },
+            { name: "كريم الشاذلي", rating: 5, comment: "أفضل وأسرع متجر تعاملت معه في مصر، الدفع عبر إنستاباي والتفعيل فوري بدون أي مشاكل." },
+            { name: "أحمد رجب", rating: 5, comment: "متجر محترم جداً وخدمة العملاء على الواتساب متجاوبة طوال الوقت وتجاوبوا معي في كل الاستفسارات." }
+        ];
+
+        let reviews = JSON.parse(localStorage.getItem('store_reviews')) || defaultReviews;
+
+        function renderReviews() {
+            const container = document.getElementById('reviewsContainer');
+            container.innerHTML = reviews.map(r => `
+                <div class="bg-black/40 p-3 rounded-xl border border-white/10 space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-emerald-300 text-xs">${r.name}</span>
+                        <div class="text-yellow-400 text-[10px]">${'<i class="fa-solid fa-star"></i>'.repeat(r.rating)}</div>
+                    </div>
+                    <p class="text-gray-300 text-[10px] leading-relaxed">"${r.comment}"</p>
+                </div>
+            `).join('');
+        }
+
+        function toggleReviews() {
+            const container = document.getElementById('reviewsContainer');
+            const btn = document.getElementById('toggleReviewsBtn');
+            if (container.style.display === 'none') {
+                container.style.display = 'grid';
+                btn.innerHTML = `<i class="fa-solid fa-eye-slash ml-1"></i> إخفاء التقييمات`;
+            } else {
+                container.style.display = 'none';
+                btn.innerHTML = `<i class="fa-solid fa-eye ml-1"></i> إظهار التقييمات`;
+            }
+        }
+
+        function openReviewModal() { document.getElementById('reviewModal').classList.remove('hidden'); }
+        function closeReviewModal() { document.getElementById('reviewModal').classList.add('hidden'); }
+
+        function submitReview(e) {
+            e.preventDefault();
+            let name = document.getElementById('reviewName').value;
+            let rating = parseInt(document.getElementById('reviewRating').value);
+            let comment = document.getElementById('reviewComment').value;
+
+            reviews.unshift({ name, rating, comment });
+            localStorage.setItem('store_reviews', JSON.stringify(reviews));
+            renderReviews();
+            closeReviewModal();
+            alert('شكراً لك! تم إضافة تقييمك ونشره بنجاح في المتجر.');
+            document.getElementById('reviewName').value = '';
+            document.getElementById('reviewComment').value = '';
+        }
+
+        let allProducts = storeProducts;
+        let cart = [];
+        let currentCategory = 'all';
+        let discountApplied = false;
+
+        function renderProducts(filter = 'all', searchQuery = '') {
+            const grid = document.getElementById('productsGrid');
+            const defBox = document.getElementById('categoryDefinitionBox');
+            defBox.innerHTML = (categoryDefinitions[filter]) ? categoryDefinitions[filter] : '';
+
+            let result = allProducts;
+            if (filter !== 'all') { result = result.filter(p => p.category === filter); }
+            if (searchQuery.trim() !== '') {
+                const q = searchQuery.toLowerCase().trim();
+                result = result.filter(p => p.name.toLowerCase().includes(q) || p.tag.toLowerCase().includes(q));
+            }
+            if (result.length === 0) {
+                grid.innerHTML = `<div class="col-span-full py-16 text-center text-gray-400 glass-panel rounded-2xl text-xs sm:text-sm">عذراً، لم نجد نتائج مطابقة!</div>`;
+                return;
+            }
+            
+            grid.innerHTML = result.map(item => `
+                <div class="product-card p-2.5 sm:p-4 flex flex-col justify-between space-y-2.5 group">
+                    <div class="bg-black/70 rounded-xl h-28 sm:h-36 lg:h-40 overflow-hidden border border-emerald-500/20 flex items-center justify-center p-1.5 relative shadow-inner">
+                        <span class="text-[7px] sm:text-[9px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 px-2 py-0.5 rounded-full absolute top-1.5 right-1.5 z-10">${item.badge}</span>
+                        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-contain transform group-hover:scale-105 transition duration-300">
+                    </div>
+                    <div class="text-center space-y-1">
+                        <span class="text-[8px] sm:text-[10px] font-bold text-cyan-400 bg-cyan-950/50 px-2 py-0.5 rounded-full border border-cyan-500/30 inline-block">${item.tag}</span>
+                        <h3 class="text-[11px] sm:text-xs font-black text-white leading-tight line-clamp-1">${item.name}</h3>
+                        <p class="text-[9px] sm:text-[10px] text-gray-400 leading-relaxed line-clamp-2">${item.desc}</p>
+                    </div>
+                    <div class="space-y-2 pt-1.5 border-t border-white/10">
+                        <div class="flex items-center justify-between px-0.5">
+                            <span class="text-[9px] sm:text-[10px] text-gray-400">السعر</span>
+                            <div class="text-xs sm:text-sm font-black text-white tracking-wider">${item.price} <span class="text-[9px] sm:text-[10px] font-normal text-emerald-400">ج.م</span></div>
+                        </div>
+                        <button onclick="addToCart('${item.id}', '${item.name}', ${item.price})" class="w-full bg-gradient-to-r from-[#113320] to-[#0d291e] hover:from-emerald-600 hover:to-teal-600 text-emerald-200 hover:text-white border border-emerald-500/40 py-1.5 sm:py-2 rounded-xl font-bold text-[10px] sm:text-xs flex items-center justify-center gap-1.5 transition shadow-md">
+                            <i class="fa-solid fa-cart-plus text-cyan-400 text-[10px]"></i> إضافة للسلة
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterCategory(cat, eventObj) {
+            currentCategory = cat;
+            document.getElementById('searchInput').value = '';
+            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+            if (eventObj && eventObj.currentTarget) eventObj.currentTarget.classList.add('active');
+            renderProducts(cat, '');
+        }
+
+        function handleSearch() { renderProducts(currentCategory, document.getElementById('searchInput').value); }
+        function openTrackingModal() { document.getElementById('trackingModal').classList.remove('hidden'); }
+        function closeTrackingModal() { document.getElementById('trackingModal').classList.add('hidden'); }
+        function checkOrderStatus() { document.getElementById('trackResult').classList.remove('hidden'); }
+        
+        function addToCart(id, name, price) {
+            let item = cart.find(i => i.id === id);
+            if (item) {
+                if (item.qty < 10) item.qty++;
+                else { alert('عذراً، الحد الأقصى للطلب هو 10 قطع لكل منتج.'); return; }
+            } else {
+                cart.push({ id, name, price, qty: 1 });
+            }
+            updateCartBadge();
+            alert('تمت إضافة المنتج للسلة بنجاح!');
+        }
+
+        function changeQty(id, delta) {
+            let item = cart.find(i => i.id === id);
+            if (item) {
+                item.qty += delta;
+                if (item.qty > 10) item.qty = 10;
+                if (item.qty <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+            }
+            updateCartBadge();
+            renderCart();
+        }
+
+        function updateCartBadge() {
+            let countEl = document.getElementById('cartCount');
+            countEl.innerText = cart.reduce((s, i) => s + i.qty, 0);
+        }
+
+        function toggleCart() { 
+            const d = document.getElementById('cartDrawer'); 
+            d.classList.toggle('hidden'); 
+            d.classList.toggle('flex'); 
+            renderCart(); 
+        }
+        
+        function applyPromoCode() {
+            let code = document.getElementById('promoInput').value.trim().toUpperCase();
+            let msg = document.getElementById('promoMsg');
+            if(code === 'H2STORE') {
+                discountApplied = true;
+                msg.className = "text-[10px] block text-emerald-400 font-bold";
+                msg.innerText = "✅ تم تطبيق الخصم (5%) بنجاح!";
+                renderCart();
+            } else {
+                discountApplied = false;
+                msg.className = "text-[10px] block text-red-400 font-bold";
+                msg.innerText = "❌ كود الخصم غير صحيح!";
+                renderCart();
+            }
+        }
+
+        function renderCart() {
+            const c = document.getElementById('cartItems');
+            if (cart.length === 0) { 
+                c.innerHTML = `<p class="text-gray-400 text-center py-12 text-xs">السلة فارغة..</p>`; 
+                document.getElementById('cartTotal').innerText = '0 ج.م'; 
+                return; 
+            }
+            let sub = 0;
+            c.innerHTML = cart.map(i => {
+                sub += i.price * i.qty;
+                return `
+                    <div class="glass-panel p-2.5 sm:p-3 rounded-xl flex items-center justify-between gap-2">
+                        <div class="flex-1">
+                            <h5 class="font-bold text-white text-[11px] sm:text-xs">${i.name}</h5>
+                            <span class="text-cyan-400 text-[11px] font-bold">${i.price * i.qty} ج.م</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 bg-black/60 px-2 py-1 rounded-lg border border-white/10">
+                            <button onclick="changeQty('${i.id}', -1)" class="text-red-400 hover:text-red-300 px-1 font-bold"><i class="fa-solid fa-minus text-[9px]"></i></button>
+                            <span class="text-white text-xs font-bold px-1">${i.qty}</span>
+                            <button onclick="changeQty('${i.id}', 1)" class="text-emerald-400 hover:text-emerald-300 px-1 font-bold"><i class="fa-solid fa-plus text-[9px]"></i></button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            if(discountApplied) {
+                sub = sub * 0.95;
+                document.getElementById('cartTotal').innerText = Math.round(sub) + ' ج.م (بعد الخصم)';
+            } else {
+                document.getElementById('cartTotal').innerText = sub + ' ج.م';
+            }
+        }
+
+        function openCheckoutModal() {
+            if (cart.length === 0) { alert('السلة فارغة!'); return; }
+            document.getElementById('cartDrawer').classList.add('hidden');
+            document.getElementById('cartDrawer').classList.remove('flex');
+            document.getElementById('checkoutModal').classList.remove('hidden');
+        }
+        function closeCheckoutModal() { document.getElementById('checkoutModal').classList.add('hidden'); }
+        
+        function submitOrder(e) {
+            e.preventDefault();
+            let name = document.getElementById('custName').value;
+            let phone = document.getElementById('custPhone').value;
+            let payment = document.getElementById('paymentMethod').value;
+            let sub = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+            if(discountApplied) sub = Math.round(sub * 0.95);
+            
+            let txt = `🛒 *طلب جديد من XBOX-H2-STORE*\n👤 الاسم: ${name}\n📞 الهاتف: ${phone}\n💳 الدفع: ${payment}\n\n📦 المنتجات المطلوبة:\n`;
+            cart.forEach(i => { txt += `• ${i.name} (الكمية: ${i.qty}) = ${i.price * i.qty} ج.م\n`; });
+            if(discountApplied) txt += `\n🎟️ تم استخدام كود خصم: H2STORE`;
+            txt += `\n\n💰 الإجمالي النهائي: ${sub} ج.م`;
+            window.open(`https://wa.me/201221188837?text=${encodeURIComponent(txt)}`, '_blank');
+            cart = []; discountApplied = false; updateCartBadge(); closeCheckoutModal();
+        }
+    </script>
+</body>
+</html>
